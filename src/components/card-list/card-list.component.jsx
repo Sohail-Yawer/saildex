@@ -1,4 +1,5 @@
 import { Component } from "react";
+import './card-list.style.css'
 
 class CardList extends Component{
 
@@ -6,9 +7,15 @@ class CardList extends Component{
         console.log(this.props);
         const {pokemons} = this.props;
         return (
-            <div>
+            <div className="card-list">
                {pokemons.map((pokemon)=> (
-                <h1 key = {pokemon.id}>{pokemon.name}</h1>
+                <div className="card-container" key={pokemon.id}>
+                    <img
+                        alt={`pokemon ${pokemon.name}`}
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.substr(0,pokemon.url.length-1).split('/').pop()}.png`}
+                    />
+                <h2 >{pokemon.name}</h2>
+                </div>
                ))}
             </div>
         );
