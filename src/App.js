@@ -54,7 +54,7 @@ class App extends Component {
           onChangeHandler = {onSearchChange}
         />
         
-      <CardList pokemons= {filteredPokemon}/>
+      <CardList pokemons= {filteredPokemon} />
       </div>
      
     );

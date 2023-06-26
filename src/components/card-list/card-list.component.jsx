@@ -3,13 +3,17 @@ import './card-list.style.css'
 
 class CardList extends Component{
 
+     handleClick() {
+        alert('You clicked me!');
+      }
+
     render() {
         console.log(this.props);
         const {pokemons} = this.props;
         return (
             <div className="card-list">
                {pokemons.map((pokemon)=> (
-                <div className="card-container" key={pokemon.id}>
+                <div className="card-container" key={pokemon.name} onClick={this.handleClick}>
                     <img
                         alt={`pokemon ${pokemon.name}`}
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.substr(0,pokemon.url.length-1).split('/').pop()}.png`}
