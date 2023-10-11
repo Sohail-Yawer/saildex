@@ -1,6 +1,9 @@
 import {Component} from 'react';
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
+import CardDetails from './components/card-details/card-details.component';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import './App.css';
 
 class App extends Component {
@@ -48,13 +51,22 @@ class App extends Component {
     return (
      
       <div className="App">
+        <div>
         <SearchBox
           className = 'pokemons-search-box'
           placeholder = 'search for pokemon' 
           onChangeHandler = {onSearchChange}
         />
         
-      <CardList pokemons= {filteredPokemon} />
+        </div>
+        <Router>
+        <Switch>
+          <Route exact path="/" render={() => <CardList pokemons={filteredPokemon} />} />
+          <Route path="/pokemon/:name" component={CardDetails} /> {/* Add this route */}
+        </Switch>
+        </Router>
+
+        
       </div>
      
     );

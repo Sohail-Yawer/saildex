@@ -1,11 +1,14 @@
 import { Component } from "react";
-import './card-list.style.css'
+import { withRouter } from "react-router-dom";
+import './card-list.style.css';
 import React from "react";
 
 class CardList extends Component{
 
      handleClick(pokemonName) {
         console.log('You clicked on = ',pokemonName);
+        this.props.history.push(`/pokemon/${pokemonName}`);
+        window.open(`/pokemon/${pokemonName}`,"_self");
       }
 
     render() {
@@ -27,4 +30,4 @@ class CardList extends Component{
     }
 }
 
-export default CardList;
+export default withRouter(CardList);
