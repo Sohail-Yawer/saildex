@@ -14,6 +14,7 @@ class CardDetails extends Component {
   handleBack = () => {
     this.props.history.push('/');
     window.open(`/`,"_self");
+    
   };
 
   componentDidMount() {
@@ -38,25 +39,25 @@ class CardDetails extends Component {
     }
 
     return (
-      <div >
-        <div>
-          <Link className="back-button" onClick={this.handleBack} >&lt; Back</Link>
-        </div>
+      <div className="card-details-container" >
+        
+        <Link className="back-button" to="/" onClick={this.handleBack} >&lt; Back</Link>
+        
 
         <div>
           <h2>Pokemon Details for: {pokemonDetails.name}</h2>
           <h3>Abilities:</h3>
-          <ol>
+          <ul>
             {pokemonDetails.abilities.map((ability, index) => (
-              <li key={index}>{ability.ability.name}</li>
+              <li key={index} >{ability.ability.name}</li>
             ))}
-          </ol>
+          </ul>
           <h3>Types:</h3>
-          <ol>
+          <ul>
             {pokemonDetails.types.map((type, index) => (
-              <li key={index}>{type.type.name}</li>
+              <li key={index} className={`type-${type.type.name}`}>{type.type.name}</li>
             ))}
-          </ol>
+          </ul>
         </div>
         {/* Display other Pokemon details here */}
       </div>

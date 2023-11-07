@@ -17,6 +17,7 @@ class CardList extends Component{
         return (
             <div className="card-list">
                {pokemons.map((pokemon)=> (
+                
                 <div className="card-container" key={pokemon.name} onClick={() => this.handleClick(pokemon.name)}>
                     <img
                         alt={`pokemon ${pokemon.name}`}

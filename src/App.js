@@ -1,8 +1,11 @@
-import {Component} from 'react';
+import {Component}  from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
+//import CardDetails from './components/card-details/card-details.component';
 import CardDetails from './components/card-details/card-details.component';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import React from 'react';
 
 import './App.css';
 
@@ -63,7 +66,7 @@ class App extends Component {
                 <CardList pokemons={filteredPokemon} />
               </div>
             )} />
-            <Route path="/pokemon/:name" component={CardDetails} />
+            <Route path="/pokemon/:name" component={CardDetails}  />
           </Switch>
         </Router>
       </div>
