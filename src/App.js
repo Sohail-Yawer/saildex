@@ -51,22 +51,21 @@ class App extends Component {
     return (
      
       <div className="App">
-        <div>
-        <SearchBox
-          className = 'pokemons-search-box'
-          placeholder = 'search for pokemon' 
-          onChangeHandler = {onSearchChange}
-        />
-        
-        </div>
         <Router>
-        <Switch>
-          <Route exact path="/" render={() => <CardList pokemons={filteredPokemon} />} />
-          <Route path="/pokemon/:name" component={CardDetails} /> {/* Add this route */}
-        </Switch>
+          <Switch>
+            <Route exact path="/" render={() => (
+              <div>
+                <SearchBox
+                  className="pokemons-search-box"
+                  placeholder="Search for Pokémon"
+                  onChangeHandler={onSearchChange}
+                />
+                <CardList pokemons={filteredPokemon} />
+              </div>
+            )} />
+            <Route path="/pokemon/:name" component={CardDetails} />
+          </Switch>
         </Router>
-
-        
       </div>
      
     );
