@@ -60,9 +60,8 @@ const CardDetails = () => {
             );
 
             if (flavorTextEntry) {
-              const cleanedText = flavorTextEntry.flavor_text
-                .replace(/[^a-zA-Z\s]/g, '')
-                .replace(/\s+/g, ' ');
+              const cleanedText = flavorTextEntry.flavor_text.replace(/\u000C/g,' ');
+                console.log(cleanedText);
 
               setPokedexEntry(cleanedText);
             }
