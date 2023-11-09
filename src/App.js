@@ -1,8 +1,8 @@
 import {Component}  from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {  BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
-//import CardDetails from './components/card-details/card-details.component';
+
 import CardDetails from './components/card-details/card-details.component';
 
 import React from 'react';
@@ -28,8 +28,7 @@ class App extends Component {
     }
      ));
   }
-
-  onSearchChange = (event)=>{
+onSearchChange = (event)=>{
     console.log(event.target.value);
 
     const searchField = event.target.value.toLocaleLowerCase();
@@ -43,6 +42,8 @@ class App extends Component {
 
 
   };
+  
+  
 
   render() {
 
@@ -52,22 +53,25 @@ class App extends Component {
       return pokemon.name.toLocaleLowerCase().includes(searchField);
     });
     return (
-     
+      
       <div className="App">
         <Router>
-          <Switch>
-            <Route exact path="/" render={() => (
-              <div>
-                <SearchBox
-                  className="pokemons-search-box"
-                  placeholder="Search for Pokémon"
-                  onChangeHandler={onSearchChange}
-                />
-                <CardList pokemons={filteredPokemon} />
-              </div>
-            )} />
-            <Route path="/pokemon/:name" component={CardDetails}  />
-          </Switch>
+          <Routes>
+          
+            <Route exact path="/" element={
+                <div>
+                  <SearchBox
+                    className="pokemons-search-box"
+                    placeholder="Search for Pokémon"
+                    onChangeHandler={onSearchChange}
+                  />
+                  <CardList pokemons={filteredPokemon} />
+                </div>
+              }
+            />
+            <Route path="/pokemon/:name" element={<CardDetails pokemons={pokemons} />}  />
+          
+            </Routes>
         </Router>
       </div>
      
