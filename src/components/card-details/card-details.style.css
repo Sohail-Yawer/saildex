@@ -16,14 +16,22 @@
 .back-button:hover {
   background-color: #333232;
 }
+
+.types-title {
+  text-align: center;
+}
+
+
+.type {
+  margin-right: 10px;
+}
+
 .type-fire {
   background-color: orangered;
   display: inline-block;
   color: #fff;
   border-radius: 10px;
   padding: 10px 10px;
-  margin-right: 0.25%;
-
 }
 
 .type-water {
@@ -32,9 +40,8 @@
   color: #fff;
   border-radius: 10px;
   padding: 10px 10px;
-  margin-right: 0.25%;
-
 }
+
 
 .type-grass{
   background-color: #78C850;
@@ -137,7 +144,7 @@
 .type-ice {
   background-color: #9EE5FC;
   display: inline-block;
-  color: #fff;
+  color: #000000;
   border-radius: 10px;
   padding: 10px 10px;  
   margin-right: 0.25%;
@@ -192,4 +199,57 @@
   padding: 10px 10px;
   margin-right: 0.25%;
 
+}
+
+
+.details-container {
+  text-align: center;
+}
+
+.details-row {
+  display: flex;
+  justify-content: center;
+}
+
+.abilities-container {
+  flex: 1;
+  margin-top: 0.25%;
+  margin-right: 10px; /* Added margin to create horizontal gap */
+  margin-bottom: 5%;
+  max-width: 20%; /* Set maximum width to 30% */
+}
+
+.abilities-container h3 {
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+.types-title {
+  text-align: center;
+}
+
+.types-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px;
+}
+
+.type {
+  margin-right: 10px;
+}
+
+.types-container h3 {
+  margin-bottom: 0;
+  display: inline-block;
+}
+.evolution-chain-container {
+  display: flex;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+.evolution-chain-item {
+  flex: 0 0 auto;
+  margin-right: 10px;
 }
