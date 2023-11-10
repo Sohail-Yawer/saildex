@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/saildex/static/css/main.b3f24573.css",
+    "main.js": "/saildex/static/js/main.67adc05d.js",
+    "static/js/787.79ea9e80.chunk.js": "/saildex/static/js/787.79ea9e80.chunk.js",
+    "index.html": "/saildex/index.html",
+    "main.b3f24573.css.map": "/saildex/static/css/main.b3f24573.css.map",
+    "main.67adc05d.js.map": "/saildex/static/js/main.67adc05d.js.map",
+    "787.79ea9e80.chunk.js.map": "/saildex/static/js/787.79ea9e80.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b3f24573.css",
+    "static/js/main.67adc05d.js"
+  ]
+}
