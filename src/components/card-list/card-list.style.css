@@ -5,7 +5,13 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
   }
+  .card-container{
+    cursor: pointer;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
+  }
   .card-container:hover {
     /* Styles for the div when hovering over it */
-    background-color: #c5c8c9; /* New background color on hover */
+    background-color: #c5c8c9;
+    transform: scale(1.05); /* New background color on hover */
   }

@@ -247,9 +247,32 @@
   display: flex;
   overflow-x: auto;
   justify-content: center;
+  
 }
 
 .evolution-chain-item {
   flex: 0 0 auto;
   margin-right: 10px;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 0.25s ease-out;
+}
+
+.evolution-chain-item:hover{
+  
+  background-color: #ededed;
+}
+
+.sprite-container {
+  position: relative;
+  display: inline-block;
+}
+
+.shiny-checkbox {
+  position: absolute;
+  top: 40%;
+  right: calc(50% + 150%);
+   /* Center + 20px to the right */
+  display: flex;
+  align-items: center;
 }
