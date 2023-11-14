@@ -27,12 +27,26 @@ const CardDetails = () => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionChainDetails, setEvolutionChainDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [shinyChecked, setShinyChecked] = useState(false);
   const navigate = useNavigate();
   const { name } = useParams();
 
   const handleBack = () => {
     navigate('/');
   };
+
+  // Check if front_shiny attribute is available
+  const isShinyAvailable = pokemonDetails && pokemonDetails.sprites && pokemonDetails.sprites.front_shiny;
+
+  const spriteUrl = pokemonDetails
+  ? shinyChecked && isShinyAvailable
+    ? pokemonDetails.sprites.front_shiny
+    : pokemonDetails.sprites.front_default
+  : '';
+
+    const handleShinyCheckboxChange = () => {
+      setShinyChecked((prevChecked) => !prevChecked); // Step 3
+    };
 
   useEffect(() => {
     const fetchEvolutionChainDetails = async (chain) => {
@@ -152,11 +166,25 @@ const CardDetails = () => {
       </Link>
 
       <div>
-        <h2>Pokemon Details for: {pokemonDetails.name}</h2>
-        <img
-          src={pokemonDetails.sprites.front_default}
-          alt={`pokemon ${pokemonDetails.name}`}
-        />
+      <h2>Pokemon Details for: {pokemonDetails.name}</h2>
+        {/* Use the updated sprite URL */}
+        {pokemonDetails && (
+          <div className="sprite-container">
+            <img src={spriteUrl} alt={`pokemon ${pokemonDetails.name}`} />
+
+            {/* Shiny Checkbox */}
+            {isShinyAvailable && (
+              <label className="shiny-checkbox">
+                Shiny
+                <input
+                  type="checkbox"
+                  checked={shinyChecked}
+                  onChange={handleShinyCheckboxChange}
+                />
+              </label>
+            )}
+          </div>
+        )}
         <div className="details-row">
           <div className='abilities-container'>
             <h3>Abilities:</h3>
@@ -186,12 +214,13 @@ const CardDetails = () => {
         <div className="evolution-chain-container">
           {evolutionChainDetails.map((pokemon, index) => (
             <div key={index} className="evolution-chain-item" onClick={() => handleEvolutionPokemonClick(pokemon.name)}>
-              <img src={pokemon.sprites.front_default} alt={`pokemon ${pokemon.name}`} />
+             <img src={pokemonDetails ? (shinyChecked && isShinyAvailable ? pokemon.sprites.front_shiny : pokemon.sprites.front_default) : ''} alt={`pokemon ${pokemon.name}`} />
               <p>{pokemon.name}</p>
             </div>
           ))}
         </div>
       </div>
+       
     </div>
   );
 };
