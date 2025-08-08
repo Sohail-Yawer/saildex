@@ -275,4 +275,5 @@
    /* Center + 20px to the right */
   display: flex;
   align-items: center;
+    color: #000000;
 }
