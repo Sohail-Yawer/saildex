@@ -38,10 +38,57 @@ const CardDetails = () => {
   // Check if front_shiny attribute is available
   const isShinyAvailable = pokemonDetails && pokemonDetails.sprites && pokemonDetails.sprites.front_shiny;
 
+  const cleanPokemonName = (name) => {
+    let cleanedName = name.toLowerCase();
+
+    // Handle "mega-x" and "mega-y" cases
+    cleanedName = cleanedName.replace('mega-x', 'megax');
+    cleanedName = cleanedName.replace('mega-y', 'megay');
+
+    //handle "gmax" to "gigantamax"
+    cleanedName = cleanedName.replace('gmax', 'gigantamax');
+    //handle "-amped" to ""
+    cleanedName = cleanedName.replace('-amped','');
+    //handle "-normal" to "" for deoxys
+    
+    cleanedName = cleanedName.replace('-normal','');
+    
+    cleanedName = cleanedName.replace('-ordinary','');
+
+    cleanedName = cleanedName.replace('-land','');
+    cleanedName = cleanedName.replace('-incarnate','');
+    //cleanedName = cleanedName.replace('-m','_m');
+    //cleanedName = cleanedName.replace('-f','_f');
+    
+    cleanedName = cleanedName.replace('-altered','');
+
+    if(cleanedName === 'nidoran-m'){
+      cleanedName = cleanedName.replace('-m','_m');
+      return cleanedName;
+    }
+
+    if(cleanedName === 'nidoran-f'){
+      cleanedName = cleanedName.replace('-f','_f');
+      return cleanedName;
+    }
+    if(cleanedName === 'mr-mime' || cleanedName === 'mr-rime'){
+      cleanedName = cleanedName.replace('-','.');
+      return cleanedName;
+    }
+    if(cleanedName === 'mime-jr'){
+      cleanedName = cleanedName.replace('-','_');
+      return cleanedName;
+    }
+
+
+    // Remove special characters and additional information
+    return cleanedName;
+  };
+
   const spriteUrl = pokemonDetails
   ? shinyChecked && isShinyAvailable
-    ? pokemonDetails.sprites.front_shiny
-    : pokemonDetails.sprites.front_default
+    ? `https://projectpokemon.org/images/shiny-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
+    : `https://projectpokemon.org/images/normal-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
   : '';
 
     const handleShinyCheckboxChange = () => {
