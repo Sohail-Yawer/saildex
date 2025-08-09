@@ -1,44 +1,52 @@
-import React from "react";
-import { useEffect } from 'react';
-
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import './card-list.style.css';
+import "./card-list.style.css";
 
 const CardList = ({ pokemons }) => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const scrollY = window.scrollY;
+        return () => window.scrollTo(0, scrollY);
+    }, []);
 
-  useEffect(() => {
-    // Save scroll position when the component mounts
-    const scrollPosition = window.scrollY;
+    const handleClick = (name) => navigate(`/pokemon/${name}`);
+    const getIdFromUrl = (url) => url.slice(0, -1).split("/").pop();
+    const formatId = (id) => `#${String(id).padStart(3, "0")}`;
+    const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-    // Return a cleanup function to restore scroll position when the component unmounts
-    return () => {
-      window.scrollTo(0, scrollPosition);
-    };
-  }, []);
+    return (
+        <div className="card-list">
+            {pokemons.map((p) => {
+                const id = getIdFromUrl(p.url);
+                return (
+                    <div
+                        key={p.name}
+                        className="card-container"
+                        onClick={() => handleClick(p.name)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") && handleClick(p.name)
+                        }
+                        aria-label={`Open details for ${p.name}`}
+                    >
+                        <div className="sprite-box">
+                            <img
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                                alt={`${p.name} sprite`}
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span className="id-tag">{formatId(id)}</span>
+                        </div>
 
-  const handleClick = (pokemonName) => {
-    console.log('You clicked on = ', pokemonName);
-    navigate(`/pokemon/${pokemonName}`);
-  };
-
-  
-
-  return (
-    <div className="card-list">
-      {pokemons.map((pokemon) => (
-        <div className="card-container" key={pokemon.name} onClick={() => handleClick(pokemon.name)}>
-          <img
-            alt={`pokemon ${pokemon.name}`}
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.substr(0, pokemon.url.length - 1).split('/').pop()}.png`}
-          />
-          <h2>{pokemon.name}</h2>
+                        <h3 className="card-name">{titleCase(p.name)}</h3>
+                    </div>
+                );
+            })}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default CardList;

@@ -1,17 +1,97 @@
 .card-list {
-    width: 85vw;
+    width: 88vw;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
-  }
-  .card-container{
+    grid-template-columns: repeat(6, minmax(140px, 1fr)); /* min width makes them smaller */
+    gap: 28px; /* more spacing between cards */
+}
+
+/* Card wrapper */
+.card-container {
     cursor: pointer;
     transform: translateZ(0);
-    transition: transform 0.25s ease-out;
-  }
-  .card-container:hover {
-    /* Styles for the div when hovering over it */
-    background-color: #c5c8c9;
-    transform: scale(1.05); /* New background color on hover */
-  }
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    will-change: transform;
+}
+
+/* Hover lift */
+.card-container:hover {
+    transform: scale(1.04);
+}
+
+/* Light grey rounded sprite stage */
+.sprite-box {
+    position: relative; /* for absolute positioning of id-tag */
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #dcdcdc;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.card-container:hover .sprite-box {
+    background: #cfcfcf;
+}
+
+/* Sprite */
+.sprite-box img {
+    max-width: 98%;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+/* Meta row for #id */
+.meta-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 6px;
+    padding: 0 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.9rem;
+    color: #0f172a;
+    letter-spacing: 0.04em;
+}
+
+.id-tag {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    opacity: 0.85;
+    color: #0f172a;
+}
+
+/* Name styling */
+.card-name {
+    margin: 6px 4px 0 4px;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .card-list { grid-template-columns: repeat(5, minmax(140px, 1fr)); }
+}
+@media (max-width: 1200px) {
+    .card-list { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
+}
+@media (max-width: 900px) {
+    .card-list { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
+}
+@media (max-width: 650px) {
+    .card-list { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+}
+@media (max-width: 420px) {
+    .card-list { grid-template-columns: 1fr; width: 92vw; }
+}

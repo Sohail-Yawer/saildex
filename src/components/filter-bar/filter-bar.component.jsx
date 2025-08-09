@@ -27,6 +27,11 @@ const TYPE_COLORS = {
     steel:   "#B4B4C2",
     dark:    "#503B2E"
 };
+const TYPE_TEXT_COLOR = {
+    ice:    "#000000",
+    normal: "#000000",
+    steel:  "#000000"
+};
 
 class FilterBar extends Component {
     componentDidMount() {
@@ -55,7 +60,7 @@ class FilterBar extends Component {
                                     key={t}
                                     type="button"
                                     className={`type-chip${active ? " active" : ""}`}
-                                    style={{ backgroundColor: TYPE_COLORS[t] }}
+                                    style={{ backgroundColor: TYPE_COLORS[t],  color: TYPE_TEXT_COLOR[t] || "#ffffff" }}
                                     onClick={() => this.handleTypeClick(t)}
                                     aria-pressed={active}
                                 >
