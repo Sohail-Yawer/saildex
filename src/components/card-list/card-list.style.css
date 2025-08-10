@@ -41,7 +41,6 @@
 .sprite-box img {
     max-width: 98%;
     height: auto;
-    image-rendering: pixelated;
 }
 
 /* Meta row for #id */
