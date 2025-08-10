@@ -19,6 +19,9 @@ const CardList = ({ pokemons }) => {
         <div className="card-list">
             {pokemons.map((p) => {
                 const id = getIdFromUrl(p.url);
+                const animated = `https://img.pokemondb.net/sprites/black-white/anim/normal/${p.name}.gif`;
+                const fallback = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
                 return (
                     <div
                         key={p.name}
@@ -26,17 +29,20 @@ const CardList = ({ pokemons }) => {
                         onClick={() => handleClick(p.name)}
                         role="button"
                         tabIndex={0}
-                        onKeyDown={(e) =>
-                            (e.key === "Enter" || e.key === " ") && handleClick(p.name)
-                        }
+                        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleClick(p.name)}
                         aria-label={`Open details for ${p.name}`}
                     >
                         <div className="sprite-box">
                             <img
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                                src={animated}
                                 alt={`${p.name} sprite`}
                                 loading="lazy"
                                 decoding="async"
+                                onError={(e) => {
+                                    // prevent infinite loop if fallback fails too
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = fallback;
+                                }}
                             />
                             <span className="id-tag">{formatId(id)}</span>
                         </div>

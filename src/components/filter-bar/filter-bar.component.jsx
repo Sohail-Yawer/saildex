@@ -33,6 +33,7 @@ const TYPE_TEXT_COLOR = {
     steel:  "#000000"
 };
 
+
 class FilterBar extends Component {
     componentDidMount() {
         this.props.loadDictionaries?.();
