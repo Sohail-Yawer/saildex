@@ -17,11 +17,16 @@ class App extends Component {
         const storedSearchField = sessionStorage.getItem('searchField') || '';
 
         this.state = {
-            pokemons: [],            // full {name, url} list
+            pokemons: [],            // full { name, url } list
             displayPokemons: [],     // filtered list
             searchField: storedSearchField,
             types: [],
-            filters: { name: storedSearchField, type: null },
+            generations: [],
+            filters: {
+                name: storedSearchField,
+                type: null,            // e.g., "fire"
+                region: null,          // e.g., "generation-i"
+            },
             loading: false,
             error: null,
         };
@@ -33,21 +38,43 @@ class App extends Component {
             .then((data) => {
                 const pokemons = data.results || [];
                 this.setState({ pokemons }, () => {
-                    // apply any stored search on load
+                    // Apply any stored search on load
                     this.applyFilters();
-                    // preload type list
-                    this.loadTypes();
+                    // Preload type + region dictionaries
+                    this.loadDictionaries();
                 });
             })
             .catch((e) => this.setState({ error: String(e) }));
     }
 
+    // Load both types and generations
+    loadDictionaries = async () => {
+        await Promise.all([this.loadTypes(), this.loadGenerations()].map(p => p.catch(() => {})));
+    };
+
     loadTypes = async () => {
         try {
             const typesRes = await fetch(`${API}/type`).then(r => r.json());
-            this.setState({
-                types: typesRes.results || [],
-            });
+            this.setState({ types: typesRes.results || [] });
+        } catch (e) {
+            this.setState({ error: String(e) });
+        }
+    };
+
+    loadGenerations = async () => {
+        try {
+            const gensRes = await fetch(`${API}/generation`).then(r => r.json());
+            // Map to friendly display names in canonical order
+            const regionNames = [
+                'Kanto (Gen I)', 'Johto (Gen II)', 'Hoenn (Gen III)',
+                'Sinnoh (Gen IV)', 'Unova (Gen V)', 'Kalos (Gen VI)',
+                'Alola (Gen VII)', 'Galar (Gen VIII)', 'Paldea (Gen IX)'
+            ];
+            const mapped = (gensRes.results || []).map((g, index) => ({
+                name: g.name, // "generation-i"
+                displayName: regionNames[index] || g.name
+            }));
+            this.setState({ generations: mapped });
         } catch (e) {
             this.setState({ error: String(e) });
         }
@@ -77,7 +104,7 @@ class App extends Component {
         this.setState(
             {
                 searchField: '',
-                filters: { name: '', type: null },
+                filters: { name: '', type: null, region: null },
             },
             this.applyFilters
         );
@@ -98,7 +125,15 @@ class App extends Component {
                 candidateNames = candidateNames.filter(n => typeSet.has(n));
             }
 
-            // NAME filter
+            // REGION filter via generation endpoint
+            if (filters.region) {
+                const genData = await fetch(`${API}/generation/${filters.region}`).then(r => r.json());
+                // generation gives pokemon_species (names match base species names)
+                const genSet = new Set(genData.pokemon_species.map(x => x.name));
+                candidateNames = candidateNames.filter(n => genSet.has(n));
+            }
+
+            // NAME filter (search)
             const q = (filters.name || '').trim().toLowerCase();
             if (q) candidateNames = candidateNames.filter(n => n.includes(q));
 
@@ -118,6 +153,7 @@ class App extends Component {
             displayPokemons,
             searchField,
             types,
+            generations,
             filters,
             loading,
             error
@@ -132,22 +168,32 @@ class App extends Component {
                             path="/"
                             element={
                                 <div>
-                                    {/* Type Filter Bar */}
+                                    {/* Logo at top of homepage */}
+                                    <div style={{ textAlign: "center", marginBottom: "5px" }}>
+                                        <img
+                                            src={`${process.env.PUBLIC_URL}/SAIL-s-Pokedex-Logo.png`}
+                                            alt="SAIL's Pokédex Logo"
+                                            style={{ maxWidth: "500px", height: "auto" }}
+                                        />
+                                    </div>
+                                    {/* Filter Bar: Type + Region */}
 
 
-                                    {/* Search Box */}
+                                    {/* Search Box (controlled via `searchField`) */}
                                     <SearchBox
                                         className="pokemons-search-box"
                                         placeholder="Search for Pokémon"
                                         onChangeHandler={this.onSearchChange}
                                         searchField={searchField}
                                     />
+
                                     <FilterBar
                                         types={types}
+                                        generations={generations}
                                         filters={filters}
                                         onFilterChange={this.onFilterChange}
                                         onReset={this.resetFilters}
-                                        loadDictionaries={this.loadTypes}
+                                        loadDictionaries={this.loadDictionaries}
                                     />
 
                                     {loading && <p>Filtering…</p>}
