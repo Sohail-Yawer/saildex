@@ -168,6 +168,14 @@ class App extends Component {
                             path="/"
                             element={
                                 <div>
+                                    {/* Logo at top of homepage */}
+                                    <div style={{ textAlign: "center", marginBottom: "5px" }}>
+                                        <img
+                                            src={`${process.env.PUBLIC_URL}/SAIL-s-Pokedex-Logo.png`}
+                                            alt="SAIL's Pokédex Logo"
+                                            style={{ maxWidth: "500px", height: "auto" }}
+                                        />
+                                    </div>
                                     {/* Filter Bar: Type + Region */}
 
 
