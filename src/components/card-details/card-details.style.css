@@ -277,3 +277,102 @@
   align-items: center;
     color: #000000;
 }
+
+.details-page {
+    padding: 20px 40px 40px;
+}
+
+.details-title {
+    text-align: center;
+    margin: 20px 0 24px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr; /* left a bit wider */
+    gap: 24px;
+    align-items: start;
+}
+
+/* Columns */
+.col-left, .col-right { display: flex; flex-direction: column; gap: 16px; }
+
+/* Panels (boxes) */
+.panel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* Titles inside panels */
+.panel-title {
+    margin: 0 0 10px 0;
+    font-weight: 800;
+    font-size: 1.25rem;
+}
+
+/* Sprite panel */
+.sprite-stage {
+    background: #e5e7eb;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: auto;
+    overflow: hidden;
+}
+.sprite-stage img {
+    max-width: 80%;
+    height: auto;
+    image-rendering: pixelated;
+}
+.shiny-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    color: #000;
+}
+
+/* Info panel rows */
+.info-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px;
+    padding: 8px 0;
+    border-top: 1px dashed #e5e7eb;
+}
+.info-row:first-of-type { border-top: none; }
+.info-key { color: #374151; font-weight: 700; }
+.info-val { color: #111827; }
+.ability-chip { margin-right: 8px; }
+
+/* Keep your existing .type and color classes from before */
+
+/* Right column panels */
+.dex-text { line-height: 1.6; }
+
+/* Evolution scroller (you already have styles; these tweak spacing) */
+.evolution-chain-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 6px;
+}
+.evolution-chain-item {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: transform .2s ease, background .2s ease;
+}
+.evolution-chain-item:hover {
+    transform: translateY(-2px);
+    background: #f3f4f6;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .details-grid { grid-template-columns: 1fr; }
+}

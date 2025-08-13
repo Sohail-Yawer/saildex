@@ -4,272 +4,255 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import './card-details.style.css';
 
 const Typewriter = ({ text, delay }) => {
-  const [currentText, setCurrentText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentText, setCurrentText] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setCurrentText((prevText) => prevText + text[currentIndex]);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, delay);
+    useEffect(() => {
+        if (currentIndex < text.length) {
+            const timeout = setTimeout(() => {
+                setCurrentText((prevText) => prevText + text[currentIndex]);
+                setCurrentIndex((prevIndex) => prevIndex + 1);
+            }, delay);
+            return () => clearTimeout(timeout);
+        }
+    }, [currentIndex, delay, text]);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, delay, text]);
-
-  return <p>{currentText}</p>;
+    return <p className="dex-text">{currentText}</p>;
 };
 
 const CardDetails = () => {
-  const [pokemonDetails, setPokemonDetails] = useState(null);
-  const [pokedexEntry, setPokedexEntry] = useState('');
-  const [evolutionChain, setEvolutionChain] = useState([]);
-  const [evolutionChainDetails, setEvolutionChainDetails] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [shinyChecked, setShinyChecked] = useState(false);
-  const navigate = useNavigate();
-  const { name } = useParams();
+    const [pokemonDetails, setPokemonDetails] = useState(null);
+    const [pokedexEntry, setPokedexEntry] = useState('');
+    const [evolutionChain, setEvolutionChain] = useState([]);
+    const [evolutionChainDetails, setEvolutionChainDetails] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [shinyChecked, setShinyChecked] = useState(false);
 
-  const handleBack = () => {
-    navigate('/');
-  };
+    const navigate = useNavigate();
+    const { name } = useParams();
 
-  // Check if front_shiny attribute is available
-  const isShinyAvailable = pokemonDetails && pokemonDetails.sprites && pokemonDetails.sprites.front_shiny;
+    const handleBack = () => navigate('/');
 
-  const cleanPokemonName = (name) => {
-    let cleanedName = name.toLowerCase();
+    // helpers
+    const cleanPokemonName = (name) => {
+        let cleanedName = name.toLowerCase();
+        cleanedName = cleanedName.replace('mega-x', 'megax');
+        cleanedName = cleanedName.replace('mega-y', 'megay');
+        cleanedName = cleanedName.replace('gmax', 'gigantamax');
+        cleanedName = cleanedName.replace('-amped','');
+        cleanedName = cleanedName.replace('-normal','');
+        cleanedName = cleanedName.replace('-ordinary','');
+        cleanedName = cleanedName.replace('-land','');
+        cleanedName = cleanedName.replace('-incarnate','');
+        cleanedName = cleanedName.replace('-altered','');
 
-    // Handle "mega-x" and "mega-y" cases
-    cleanedName = cleanedName.replace('mega-x', 'megax');
-    cleanedName = cleanedName.replace('mega-y', 'megay');
-
-    //handle "gmax" to "gigantamax"
-    cleanedName = cleanedName.replace('gmax', 'gigantamax');
-    //handle "-amped" to ""
-    cleanedName = cleanedName.replace('-amped','');
-    //handle "-normal" to "" for deoxys
-    
-    cleanedName = cleanedName.replace('-normal','');
-    
-    cleanedName = cleanedName.replace('-ordinary','');
-
-    cleanedName = cleanedName.replace('-land','');
-    cleanedName = cleanedName.replace('-incarnate','');
-    //cleanedName = cleanedName.replace('-m','_m');
-    //cleanedName = cleanedName.replace('-f','_f');
-    
-    cleanedName = cleanedName.replace('-altered','');
-
-    if(cleanedName === 'nidoran-m'){
-      cleanedName = cleanedName.replace('-m','_m');
-      return cleanedName;
-    }
-
-    if(cleanedName === 'nidoran-f'){
-      cleanedName = cleanedName.replace('-f','_f');
-      return cleanedName;
-    }
-    if(cleanedName === 'mr-mime' || cleanedName === 'mr-rime'){
-      cleanedName = cleanedName.replace('-','.');
-      return cleanedName;
-    }
-    if(cleanedName === 'mime-jr'){
-      cleanedName = cleanedName.replace('-','_');
-      return cleanedName;
-    }
-
-
-    // Remove special characters and additional information
-    return cleanedName;
-  };
-
-  const spriteUrl = pokemonDetails
-  ? shinyChecked && isShinyAvailable
-    ? `https://projectpokemon.org/images/shiny-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
-    : `https://projectpokemon.org/images/normal-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
-  : '';
-
-    const handleShinyCheckboxChange = () => {
-      setShinyChecked((prevChecked) => !prevChecked); // Step 3
+        if (cleanedName === 'nidoran-m') return cleanedName.replace('-m','_m');
+        if (cleanedName === 'nidoran-f') return cleanedName.replace('-f','_f');
+        if (cleanedName === 'mr-mime' || cleanedName === 'mr-rime') return cleanedName.replace('-','.');
+        if (cleanedName === 'mime-jr') return cleanedName.replace('-','_');
+        return cleanedName;
     };
 
-  useEffect(() => {
-    const fetchEvolutionChainDetails = async (chain) => {
-      const details = [];
-      const processChain = async (node) => {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${node.species.name}`);
-        const data = await response.json();
-        details.push(data);
-        if (node.evolves_to.length > 0) {
-          await processChain(node.evolves_to[0]);
-        }
-      };
-      await processChain(chain);
-      setEvolutionChainDetails(details);
+    const isShinyAvailable =
+        pokemonDetails && pokemonDetails.sprites && pokemonDetails.sprites.front_shiny;
+
+    const spriteUrl =
+        pokemonDetails
+            ? shinyChecked && isShinyAvailable
+                ? `https://projectpokemon.org/images/shiny-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
+                : `https://img.pokemondb.net/artwork/${cleanPokemonName(pokemonDetails.name)}.jpg`
+            : '';
+
+    const handleShinyCheckboxChange = () => setShinyChecked((prev) => !prev);
+
+    const parseEvolutionChain = (chain) => {
+        const result = [];
+        const walk = (node) => {
+            result.push(node.species.name);
+            if (node.evolves_to.length > 0) walk(node.evolves_to[0]);
+        };
+        walk(chain);
+        return result;
     };
 
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemonDetails(data);
+    useEffect(() => {
+        const fetchEvolutionChainDetails = async (chain) => {
+            const details = [];
+            const walk = async (node) => {
+                const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${node.species.name}`);
+                const data = await res.json();
+                details.push(data);
+                if (node.evolves_to.length > 0) await walk(node.evolves_to[0]);
+            };
+            await walk(chain);
+            setEvolutionChainDetails(details);
+        };
 
-        fetch(data.species.url)
-          .then((speciesResponse) => speciesResponse.json())
-          .then((speciesData) => {
-            const flavorTextEntry = speciesData.flavor_text_entries.find(
-              (entry) => entry.language.name === 'en'
-            );
+        fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+            .then((r) => r.json())
+            .then((data) => {
+                setPokemonDetails(data);
+                return fetch(data.species.url);
+            })
+            .then((r) => r.json())
+            .then((speciesData) => {
+                const entry = speciesData.flavor_text_entries.find((e) => e.language.name === 'en');
+                if (entry) setPokedexEntry(entry.flavor_text.replace(/\u000C/g, ' '));
 
-            if (flavorTextEntry) {
-              const cleanedText = flavorTextEntry.flavor_text.replace(/\u000C/g, ' ');
-              setPokedexEntry(cleanedText);
-            }
-
-            // Fetch evolution chain information
-            fetch(speciesData.evolution_chain.url)
-              .then((evolutionChainResponse) => evolutionChainResponse.json())
-              .then((evolutionChainData) => {
-                const chain = parseEvolutionChain(evolutionChainData.chain);
+                return fetch(speciesData.evolution_chain.url).then((r) => r.json());
+            })
+            .then((evoData) => {
+                const chain = parseEvolutionChain(evoData.chain);
                 setEvolutionChain(chain);
-                fetchEvolutionChainDetails(evolutionChainData.chain);
-                setLoading(false); // Set loading to false once everything is loaded
-              })
-              .catch((evolutionChainError) => {
-                console.error('Error fetching Pokemon evolution chain:', evolutionChainError);
-                setLoading(false); // Handle loading state in case of an error
-              });
-          })
-          .catch((speciesError) => {
-            console.error('Error fetching Pokemon species details:', speciesError);
-            setLoading(false); // Handle loading state in case of an error
-          });
-      })
-      .catch((error) => {
-        console.error('Error fetching Pokemon details:', error);
-        setLoading(false); // Handle loading state in case of an error
-      });
-  }, [name]);
+                return (async () => {
+                    await fetchEvolutionChainDetails(evoData.chain);
+                    setLoading(false);
+                })();
+            })
+            .catch(() => setLoading(false));
+    }, [name]);
 
-  const parseEvolutionChain = (chain) => {
-    const result = [];
-    const processChain = (node) => {
-      result.push(node.species.name);
-      if (node.evolves_to.length > 0) {
-        processChain(node.evolves_to[0]);
-      }
+    // click evo card to navigate + refresh entry
+    const handleEvolutionPokemonClick = async (pokemonName) => {
+        try {
+            setLoading(true);
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            const data = await res.json();
+
+            const speciesRes = await fetch(data.species.url);
+            const speciesData = await speciesRes.json();
+            const entry = speciesData.flavor_text_entries.find((e) => e.language.name === 'en');
+            const cleaned = entry ? entry.flavor_text.replace(/\u000C/g, ' ') : '';
+
+            setPokemonDetails(data);
+            setPokedexEntry(cleaned);
+
+            // navigate after state updates
+            setTimeout(() => navigate(`/pokemon/${pokemonName}`), 0);
+        } catch (e) {
+            // swallow
+        } finally {
+            setLoading(false);
+        }
     };
-    processChain(chain);
-    return result;
-  };
 
-  // pokedex entry update when clicked on evolution chain
-  const handleEvolutionPokemonClick = async (pokemonName) => {
-    try {
-      setLoading(true); // Set loading to true when starting the new fetch
-
-      // Fetch details for the clicked Pokemon
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-      const data = await response.json();
-      let cleanedText = '';
-
-      // Fetch the species details for the clicked Pokemon
-      const speciesResponse = await fetch(data.species.url);
-      const speciesData = await speciesResponse.json();
-
-      // Find the Pokedex entry for the clicked Pokemon
-      const flavorTextEntry = speciesData.flavor_text_entries.find(
-        (entry) => entry.language.name === 'en'
-      );
-
-      if (flavorTextEntry) {
-        cleanedText = flavorTextEntry.flavor_text.replace(/\u000C/g, '');
-      }
-
-      // Update the state and navigate to the new URL
-      setPokedexEntry(cleanedText);
-      setPokemonDetails(data);
-
-      // Delay navigation to ensure state is updated before navigating
-      setTimeout(() => {
-        navigate(`/pokemon/${pokemonName}`);
-      }, 0);
-    } catch (error) {
-      console.error('Error fetching Pokemon details:', error);
-    } finally {
-      setLoading(false); // Set loading to false after fetch completes, regardless of success or failure
+    if (loading || !pokemonDetails) {
+        return <div>Loading...</div>;
     }
-  };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    // some quick displays
+    const idPadded = `#${String(pokemonDetails.id).padStart(3, '0')}`;
+    const heightM = `${(pokemonDetails.height / 10).toFixed(1)} m`;
+    const weightKg = `${(pokemonDetails.weight / 10).toFixed(1)} kg`;
 
-  return (
-    <div className="card-details-container">
-      <Link className="back-button" to="/" onClick={handleBack}>
-        &lt; Back
-      </Link>
+    return (
+        <div className="details-page">
+            <Link className="back-button" to="/" onClick={handleBack}>
+                &lt; Back
+            </Link>
 
-      <div>
-      <h2>Pokemon Details for: {pokemonDetails.name}</h2>
-        {/* Use the updated sprite URL */}
-        {pokemonDetails && (
-          <div className="sprite-container">
-            <img src={spriteUrl} alt={`pokemon ${pokemonDetails.name}`} />
+            <h1 className="details-title">
+                {pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1)}
+            </h1>
 
-            {/* Shiny Checkbox */}
-            {isShinyAvailable && (
-              <label className="shiny-checkbox">
-                Shiny
-                <input
-                  type="checkbox"
-                  checked={shinyChecked}
-                  onChange={handleShinyCheckboxChange}
-                />
-              </label>
-            )}
-          </div>
-        )}
-        <div className="details-row">
-          <div className='abilities-container'>
-            <h3>Abilities:</h3>
+            <div className="details-grid">
+                {/* LEFT COLUMN */}
+                <div className="col-left">
+                    {/* Sprite panel */}
+                    <div className="panel sprite-panel">
+                        <div className="sprite-stage">
+                            <img src={spriteUrl} alt={`pokemon ${pokemonDetails.name}`} />
+                        </div>
 
-            {pokemonDetails.abilities.map((ability, index) => (
-              <li key={index}>{ability.ability.name}</li>
-            ))}
-          </div>
-          <div>
-            <h3 className="types-title">Type:</h3>
-            <div className="types-container">
-              {pokemonDetails.types.map((type, index) => (
-                <div key={index} className={`type type-${type.type.name}`}>
-                  {type.type.name}
+                        {/* Shiny checkbox under image */}
+                        {isShinyAvailable && (
+                            <label className="shiny-toggle">
+                                <input
+                                    type="checkbox"
+                                    checked={shinyChecked}
+                                    onChange={handleShinyCheckboxChange}
+                                />
+                                Shiny
+                            </label>
+                        )}
+                    </div>
+
+                    {/* Pokédex entry NOW on the left */}
+                    <div className="panel training-panel">
+                        <h2 className="panel-title">Pokédex entry</h2>
+                        <Typewriter text={pokedexEntry} delay={50} />
+                    </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <h2>Pokedex Entry:</h2>
-        {loading ? (
-          <div>Loading Pokedex Entry...</div>
-        ) : (
-          <Typewriter text={pokedexEntry} delay={50} />
-        )}
-        <h2>Evolution Chain:</h2>
-        <div className="evolution-chain-container">
-          {evolutionChainDetails.map((pokemon, index) => (
-            <div key={index} className="evolution-chain-item" onClick={() => handleEvolutionPokemonClick(pokemon.name)}>
-             <img src={pokemonDetails ? (shinyChecked && isShinyAvailable ? pokemon.sprites.front_shiny : pokemon.sprites.front_default) : ''} alt={`pokemon ${pokemon.name}`} />
-              <p>{pokemon.name}</p>
-            </div>
+
+                {/* RIGHT COLUMN */}
+                <div className="col-right">
+                    {/* Pokédex data NOW on the right */}
+                    <div className="panel info-panel">
+                        <h2 className="panel-title">Pokédex data</h2>
+                        <div className="info-row">
+                            <span className="info-key">National №</span>
+                            <span className="info-val">{idPadded}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-key">Type</span>
+                            <span className="info-val">
+          {pokemonDetails.types.map((t, i) => (
+              <span key={i} className={`type type-${t.type.name}`}>{t.type.name}</span>
           ))}
+        </span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-key">Height</span>
+                            <span className="info-val">{heightM}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-key">Weight</span>
+                            <span className="info-val">{weightKg}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-key">Abilities</span>
+                            <span className="info-val">
+          {pokemonDetails.abilities.map((a, idx) => (
+              <span key={idx} className="ability-chip">{a.ability.name}</span>
+          ))}
+        </span>
+                        </div>
+                    </div>
+
+                    {/* Evolution chain stays under it on the right */}
+                    <div className="panel breeding-panel">
+                        <h2 className="panel-title">Evolution chain</h2>
+                        <div className="evolution-chain-container">
+                            {evolutionChainDetails.map((p, idx) => {
+                                const img =
+                                    shinyChecked && p?.sprites?.front_shiny
+                                        ? p.sprites.front_shiny
+                                        : p.sprites.front_default;
+                                return (
+                                    <div
+                                        key={idx}
+                                        className="evolution-chain-item"
+                                        onClick={() => handleEvolutionPokemonClick(p.name)}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyDown={(e) =>
+                                            (e.key === 'Enter' || e.key === ' ') &&
+                                            handleEvolutionPokemonClick(p.name)
+                                        }
+                                        aria-label={`View ${p.name}`}
+                                    >
+                                        <img src={img} alt={p.name} />
+                                        <p>{p.name}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-       
-    </div>
-  );
+    );
 };
 
 export default CardDetails;
