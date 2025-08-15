@@ -36,7 +36,7 @@ const CardDetails = () => {
     // helpers
     const cleanPokemonName = (name) => {
         let cleanedName = name.toLowerCase();
-        cleanedName = cleanedName.replace('mega-x', 'megax');
+        cleanedName = cleanedName.replace('mega-x', '006_f2');
         cleanedName = cleanedName.replace('mega-y', 'megay');
         cleanedName = cleanedName.replace('gmax', 'gigantamax');
         cleanedName = cleanedName.replace('-amped','');
@@ -46,8 +46,8 @@ const CardDetails = () => {
         cleanedName = cleanedName.replace('-incarnate','');
         cleanedName = cleanedName.replace('-altered','');
 
-        if (cleanedName === 'nidoran-m') return cleanedName.replace('-m','_m');
-        if (cleanedName === 'nidoran-f') return cleanedName.replace('-f','_f');
+        if (cleanedName === 'nidoran-m') return cleanedName.replace('-m','-m');
+        if (cleanedName === 'nidoran-f') return cleanedName.replace('-f','-f');
         if (cleanedName === 'mr-mime' || cleanedName === 'mr-rime') return cleanedName.replace('-','.');
         if (cleanedName === 'mime-jr') return cleanedName.replace('-','_');
         return cleanedName;
@@ -59,8 +59,10 @@ const CardDetails = () => {
     const spriteUrl =
         pokemonDetails
             ? shinyChecked && isShinyAvailable
-                ? `https://projectpokemon.org/images/shiny-sprite/${cleanPokemonName(pokemonDetails.name)}.gif`
-                : `https://img.pokemondb.net/artwork/${cleanPokemonName(pokemonDetails.name)}.jpg`
+                ? `https://img.pokemondb.net/sprites/home/shiny/2x/${cleanPokemonName(pokemonDetails.name)}.jpg`
+                : `https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/${String(
+                    pokemonDetails.id
+                ).padStart(3, '0')}.png`
             : '';
 
     const handleShinyCheckboxChange = () => setShinyChecked((prev) => !prev);
@@ -164,7 +166,7 @@ const CardDetails = () => {
                             <img src={spriteUrl} alt={`pokemon ${pokemonDetails.name}`} />
                         </div>
 
-                        {/* Shiny checkbox under image */}
+                         {/*Shiny checkbox under image*/}
                         {isShinyAvailable && (
                             <label className="shiny-toggle">
                                 <input

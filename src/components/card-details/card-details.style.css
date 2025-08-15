@@ -323,9 +323,10 @@
     overflow: hidden;
 }
 .sprite-stage img {
-    max-width: 80%;
+    max-height: 200px;  /* match shiny size */
+    width: auto;
     height: auto;
-    image-rendering: pixelated;
+    object-fit: contain;
 }
 .shiny-toggle {
     display: inline-flex;
