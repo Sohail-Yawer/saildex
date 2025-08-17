@@ -29,6 +29,7 @@ const pokemonApiNameForSpecies = (speciesName) => {
     if (speciesName === 'giratina') return 'giratina-altered';
     if (speciesName === 'deoxys') return 'deoxys-normal';
     if (speciesName === 'keldeo') return 'keldeo-ordinary';
+    if (speciesName === 'toxtricity') return 'toxtricity-amped';
     return speciesName;
 };
 
@@ -54,13 +55,72 @@ const MEGA_SINGLE_SPECIES = new Set([
 // ---- Special multi-form tabs (Megas X/Y, Kyurem, Giratina, Primal, Origin, etc.) ----
 // Each tab: { key, label, normalSuffix, shiny: () => url | null }
 const FORM_TABS = {
+    //Venasaur Gmax
+    3:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f3',
+           // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
     // Charizard (X/Y)
     6: [
         { key: 'mega-x', label: 'Mega X', normalSuffix: '_f2',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/charizard-mega-x.jpg' },
         { key: 'mega-y', label: 'Mega Y', normalSuffix: '_f3',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/charizard-mega-y.jpg' },
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f4',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
     ],
+    // Blastoise gmax
+    9:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f3',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Butterfree gmax
+    12: [
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Pikachu gmax
+    25:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Meowth gmax
+    52:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f4',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Machamp gmax
+    68:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',}
+    ],
+    // Gengar gmax
+    94:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f3',}
+    ],
+    //Kingler gmax
+    99:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',}
+    ],
+    //Lapras gmax
+    131:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',}
+    ],
+    //Eevee gmax
+    133:[
+
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',},
+    ],
+    // Snorlax gmax
+    143:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',}
+    ],
+
     // Mewtwo (X/Y)
     150: [
         { key: 'mega-x', label: 'Mega X', normalSuffix: '_f2',
@@ -101,6 +161,7 @@ const FORM_TABS = {
         { key: 'primal', label: 'Primal', normalSuffix: '_f2',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/groudon-primal.jpg' },
     ],
+    //Deoxys Attack,Defense and Speed
     386: [
         { key: 'attack', label: 'Attack', normalSuffix: '_f2',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/deoxys-attack.jpg'},
@@ -109,9 +170,109 @@ const FORM_TABS = {
         { key: 'speed', label: 'Speed', normalSuffix: '_f4',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/deoxys-speed.jpg'}
     ],
+    //Keldeo Resolute
     647: [
         {key: 'resolute', label: 'Resolute', normalSuffix: '_f2',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/keldeo-resolute.jpg'}
+    ],
+    //Garbodor gmax
+    569: [
+        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    ],
+    //Melmetal gmax
+    809: [
+        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    ],
+    //cinderace gmax
+    815:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    ],
+    //Inteleon gmax
+    818:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+        // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+    },],
+    //corviknight gmax
+    823:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    ],
+    //orbeetle gmax
+    826:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Drednaw gmax
+    834:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //coalossal gmax
+    839:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Flapple gmax
+    841:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Appletun gmax
+    842:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Sandaconda gmax
+    844:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Toxtricity amped and gmax
+    849:[
+        {key: 'Amped form', label: 'Amped form', normalSuffix:'_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/toxtricity-amped.jpg'},
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f3',}
+    ],
+    //Centiskorch gmax
+    851:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Hatterene gmax
+    858:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Grimmsnarl gmax
+    861:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Alcremie gmax
+    869:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //Copperjah gmax
+    879:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
+    ],
+    //duraludon gmax
+    884:[
+        {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
+            // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
+        },
     ]
 };
 
