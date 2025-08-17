@@ -377,3 +377,24 @@
 @media (max-width: 960px) {
     .details-grid { grid-template-columns: 1fr; }
 }
+
+
+.sprite-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.sprite-tab {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.sprite-tab.active {
+    background: #e5e7eb;
+    border-color: #cbd5e1;
+}
