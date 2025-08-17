@@ -17,8 +17,8 @@ const cleanPokemonNameForShiny = (name) => {
     n = n.replace('-altered', '');
     n = n.replace('-origin', '');
     // punctuation quirks
-    if (n === 'mr-mime' || n === 'mr-rime') n = n.replace('-', '.'); // mr.mime / mr.rime
-    if (n === 'mime-jr') n = n.replace('-', '_');                    // mime_jr
+    if (n === 'mr-mime' || n === 'mr-rime') n = n.replace('-', '-'); // mr.mime / mr.rime
+    if (n === 'mime-jr') n = n.replace('-', '-');                    // mime_jr
     if (n === 'nidoran-m' || n === 'nidoran-f') return n;            // keep
     return n;
 };
