@@ -1,0 +1,66 @@
+/* Track */
+.dm-toggle {
+    position: relative;
+    width: 70px;
+    height: 34px;                 /* unchanged height to match other buttons */
+    border-radius: 999px;
+    padding: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Dark track */
+.dm-toggle.on {
+    background: #BB86FC;
+    border-color: #161a2b;
+}
+
+/* Light track */
+.dm-toggle.off {
+    background: #e5e7eb;
+    border-color: #cbd5e1;
+}
+
+/* Thumb (moon/sun) — bigger icon without increasing control height */
+.dm-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 29px;                  /* was 20px */
+    height: 29px;                 /* was 20px */
+    border-radius: 999px;
+    background-size: contain;     /* keep full icon visible */
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,.2));
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    transition: transform 0.25s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Move right + show Lunatone in dark mode */
+.dm-toggle.on .dm-thumb {
+    /* 64 - 3(left) - 3(right) - 22(thumb) = 36px */
+    transform: translateX(36px);
+    background-image: url("https://marriland.com/wp-content/plugins/marriland-core/images/pokemon/icons/big/lunatone.png");
+}
+
+/* Left + show Solrock in light mode */
+.dm-toggle.off .dm-thumb {
+    transform: translateX(0);
+    background-image: url("https://marriland.com/wp-content/plugins/marriland-core/images/pokemon/icons/big/solrock.png");
+}
+
+/* Nice focus ring for keyboard users */
+.dm-toggle:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
+}
+
+/* Optional hover pop */
+.dm-toggle:hover .dm-thumb {
+    transform: translateX(var(--dm-thumb-x, 0)) scale(1.06);
+}
+.dm-toggle.on:hover { --dm-thumb-x: 36px; }  /* was 38px */
