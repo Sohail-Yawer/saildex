@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./card-list.style.css";
 
-const CardList = ({ pokemons }) => {
+const CardList = ({ pokemons, showBack = false }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,11 +15,18 @@ const CardList = ({ pokemons }) => {
     const formatId = (id) => `#${String(id).padStart(3, "0")}`;
     const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
+    const animUrl = (name, back = false) => {
+        // front normal: .../anim/normal/{name}.gif
+        // back  normal: .../anim/back-normal/{name}.gif
+        const dir = back ? "back-normal" : "normal";
+        return `https://img.pokemondb.net/sprites/black-white/anim/${dir}/${name}.gif`;
+    };
+
     return (
         <div className="card-list">
             {pokemons.map((p) => {
                 const id = getIdFromUrl(p.url);
-                const animated = `https://img.pokemondb.net/sprites/black-white/anim/normal/${p.name}.gif`;
+                const animated = animUrl(p.name, showBack);
                 const fallback = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
                 return (
@@ -39,8 +46,7 @@ const CardList = ({ pokemons }) => {
                                 loading="lazy"
                                 decoding="async"
                                 onError={(e) => {
-                                    // prevent infinite loop if fallback fails too
-                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.onerror = null; // avoid loop
                                     e.currentTarget.src = fallback;
                                 }}
                             />

@@ -5,15 +5,16 @@ import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 import CardDetails from './components/card-details/card-details.component';
 import FilterBar from './components/filter-bar/filter-bar.component';
+import TurnBackToggle from "./components/topbar/turn-back/turn-back.component";
 
 import './App.css';
 
 const API = 'https://pokeapi.co/api/v2';
 
-// --- helper to parse ID from URL like /pokemon/6/
+// helper to parse ID from URL like /pokemon/6/
 const getIdFromUrl = (url) => url.slice(0, -1).split('/').pop();
 
-// ======= Species ID sets for form filters =======
+// ======= Species ID sets for form filters (unchanged) =======
 const MEGA_SPECIES_IDS = new Set([
     3, 6, 9, 15, 18, 65, 80, 94, 115, 127, 130, 142,
     150, 181, 208, 212, 214, 229, 248, 254, 257, 260,
@@ -26,7 +27,7 @@ const ALOLAN_IDS = new Set([
     74, 75, 76, 88, 89, 103, 105,
 ]);
 const GALARIAN_IDS = new Set([
-    52,77, 78, 79, 80, 83, 110, 122, 144, 145, 146,
+    52, 77, 78, 79, 80, 83, 110, 122, 144, 145, 146,
     199, 222, 263, 264, 554, 555, 562, 618,
 ]);
 const HISUIAN_IDS = new Set([
@@ -38,6 +39,7 @@ class App extends Component {
     constructor() {
         super();
         const storedSearchField = sessionStorage.getItem('searchField') || '';
+        const storedShowBack = sessionStorage.getItem('showBack') === '1';
 
         this.state = {
             pokemons: [],
@@ -51,6 +53,7 @@ class App extends Component {
                 region: null,
                 form: null,
             },
+            showBack: storedShowBack, // NEW
             loading: false,
             error: null,
         };
@@ -137,21 +140,18 @@ class App extends Component {
         try {
             let candidateNames = pokemons.map(p => p.name);
 
-            // type filter
             if (filters.type) {
                 const typeData = await fetch(`${API}/type/${filters.type}`).then(r => r.json());
                 const typeSet = new Set(typeData.pokemon.map(x => x.pokemon.name));
                 candidateNames = candidateNames.filter(n => typeSet.has(n));
             }
 
-            // region filter
             if (filters.region) {
                 const genData = await fetch(`${API}/generation/${filters.region}`).then(r => r.json());
                 const genSet = new Set(genData.pokemon_species.map(x => x.name));
                 candidateNames = candidateNames.filter(n => genSet.has(n));
             }
 
-            // form filter
             if (filters.form) {
                 const nameToId = new Map(
                     pokemons.map(p => [p.name, Number(getIdFromUrl(p.url))])
@@ -166,7 +166,6 @@ class App extends Component {
                 }
             }
 
-            // name filter
             const q = (filters.name || '').trim().toLowerCase();
             if (q) candidateNames = candidateNames.filter(n => n.includes(q));
 
@@ -179,11 +178,29 @@ class App extends Component {
         }
     };
 
+    // NEW: Turn Back toggle
+    toggleBack = () => {
+        this.setState(
+            (prev) => ({ showBack: !prev.showBack }),
+            () => sessionStorage.setItem('showBack', this.state.showBack ? '1' : '0')
+        );
+    };
+
     render() {
-        const { pokemons, displayPokemons, searchField, types, generations, filters, loading, error } = this.state;
+        const {
+            pokemons,
+            displayPokemons,
+            searchField,
+            types,
+            generations,
+            filters,
+            loading,
+            error,
+            showBack
+        } = this.state;
 
         return (
-            <div className="App">
+            <div className="App" style={{ position: 'relative' }}>
                 <Router>
                     <Routes>
                         <Route
@@ -191,6 +208,23 @@ class App extends Component {
                             path="/"
                             element={
                                 <div>
+                                    {/* Top-right controls bar */}
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: 12,
+                                            right: 16,
+                                            display: "flex",
+                                            gap: 12,
+                                            alignItems: "center",
+                                            zIndex: 10
+                                        }}
+                                    >
+                                        <TurnBackToggle showBack={showBack} onToggle={this.toggleBack} />
+                                        {/* (ShinyDex & Dark/Light toggles will be added later) */}
+                                    </div>
+
+                                    {/* Logo */}
                                     <div style={{ textAlign: "center", marginBottom: "5px" }}>
                                         <img
                                             src={`${process.env.PUBLIC_URL}/SAIL-s-Pokedex-Logo.png`}
@@ -199,6 +233,7 @@ class App extends Component {
                                         />
                                     </div>
 
+                                    {/* Search */}
                                     <SearchBox
                                         className="pokemons-search-box"
                                         placeholder="Search for Pokémon"
@@ -206,6 +241,7 @@ class App extends Component {
                                         searchField={searchField}
                                     />
 
+                                    {/* Filters */}
                                     <FilterBar
                                         types={types}
                                         generations={generations}
@@ -217,7 +253,8 @@ class App extends Component {
                                     {loading && <p>Filtering…</p>}
                                     {error && <p style={{ color: 'salmon' }}>{error}</p>}
 
-                                    <CardList pokemons={displayPokemons} />
+                                    {/* Pass showBack into CardList */}
+                                    <CardList pokemons={displayPokemons} showBack={showBack} />
                                 </div>
                             }
                         />
