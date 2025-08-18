@@ -6,15 +6,14 @@ import SearchBox from './components/search-box/search-box.component';
 import CardDetails from './components/card-details/card-details.component';
 import FilterBar from './components/filter-bar/filter-bar.component';
 import TurnBackToggle from "./components/topbar/turn-back/turn-back.component";
+import ShinyDexToggle from "./components/topbar/shinydex/shinydex.component";
 
 import './App.css';
 
 const API = 'https://pokeapi.co/api/v2';
-
-// helper to parse ID from URL like /pokemon/6/
 const getIdFromUrl = (url) => url.slice(0, -1).split('/').pop();
 
-// ======= Species ID sets for form filters (unchanged) =======
+// (same ID sets as you have)
 const MEGA_SPECIES_IDS = new Set([
     3, 6, 9, 15, 18, 65, 80, 94, 115, 127, 130, 142,
     150, 181, 208, 212, 214, 229, 248, 254, 257, 260,
@@ -39,7 +38,8 @@ class App extends Component {
     constructor() {
         super();
         const storedSearchField = sessionStorage.getItem('searchField') || '';
-        const storedShowBack = sessionStorage.getItem('showBack') === '1';
+        const storedShowBack  = sessionStorage.getItem('showBack')  === '1';
+        const storedShowShiny = sessionStorage.getItem('showShiny') === '1';
 
         this.state = {
             pokemons: [],
@@ -53,7 +53,8 @@ class App extends Component {
                 region: null,
                 form: null,
             },
-            showBack: storedShowBack, // NEW
+            showBack: storedShowBack,     // NEW
+            showShiny: storedShowShiny,   // NEW
             loading: false,
             error: null,
         };
@@ -153,9 +154,7 @@ class App extends Component {
             }
 
             if (filters.form) {
-                const nameToId = new Map(
-                    pokemons.map(p => [p.name, Number(getIdFromUrl(p.url))])
-                );
+                const nameToId = new Map(pokemons.map(p => [p.name, Number(getIdFromUrl(p.url))]));
                 const formSet =
                     filters.form === 'mega' ? MEGA_SPECIES_IDS :
                         filters.form === 'alolan' ? ALOLAN_IDS :
@@ -178,11 +177,18 @@ class App extends Component {
         }
     };
 
-    // NEW: Turn Back toggle
+    // Toggles
     toggleBack = () => {
         this.setState(
             (prev) => ({ showBack: !prev.showBack }),
             () => sessionStorage.setItem('showBack', this.state.showBack ? '1' : '0')
+        );
+    };
+
+    toggleShiny = () => {
+        this.setState(
+            (prev) => ({ showShiny: !prev.showShiny }),
+            () => sessionStorage.setItem('showShiny', this.state.showShiny ? '1' : '0')
         );
     };
 
@@ -196,7 +202,8 @@ class App extends Component {
             filters,
             loading,
             error,
-            showBack
+            showBack,
+            showShiny
         } = this.state;
 
         return (
@@ -221,7 +228,7 @@ class App extends Component {
                                         }}
                                     >
                                         <TurnBackToggle showBack={showBack} onToggle={this.toggleBack} />
-                                        {/* (ShinyDex & Dark/Light toggles will be added later) */}
+                                        <ShinyDexToggle showShiny={showShiny} onToggle={this.toggleShiny} />
                                     </div>
 
                                     {/* Logo */}
@@ -253,8 +260,8 @@ class App extends Component {
                                     {loading && <p>Filtering…</p>}
                                     {error && <p style={{ color: 'salmon' }}>{error}</p>}
 
-                                    {/* Pass showBack into CardList */}
-                                    <CardList pokemons={displayPokemons} showBack={showBack} />
+                                    {/* Pass both flags into CardList */}
+                                    <CardList pokemons={displayPokemons} showBack={showBack} showShiny={showShiny} />
                                 </div>
                             }
                         />

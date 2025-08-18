@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./card-list.style.css";
 
-const CardList = ({ pokemons, showBack = false }) => {
+const CardList = ({ pokemons, showBack = false, showShiny = false }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,10 +15,13 @@ const CardList = ({ pokemons, showBack = false }) => {
     const formatId = (id) => `#${String(id).padStart(3, "0")}`;
     const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-    const animUrl = (name, back = false) => {
-        // front normal: .../anim/normal/{name}.gif
-        // back  normal: .../anim/back-normal/{name}.gif
-        const dir = back ? "back-normal" : "normal";
+    // Build animated URL per toggle state
+    const animUrl = (name, back, shiny) => {
+        // dirs: normal | back-normal | shiny | back-shiny
+        let dir = "normal";
+        if (back && shiny) dir = "back-shiny";
+        else if (back) dir = "back-normal";
+        else if (shiny) dir = "shiny";
         return `https://img.pokemondb.net/sprites/black-white/anim/${dir}/${name}.gif`;
     };
 
@@ -26,8 +29,12 @@ const CardList = ({ pokemons, showBack = false }) => {
         <div className="card-list">
             {pokemons.map((p) => {
                 const id = getIdFromUrl(p.url);
-                const animated = animUrl(p.name, showBack);
-                const fallback = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+                const animated = animUrl(p.name, showBack, showShiny);
+
+                // Fallbacks (static sprites)
+                const fallbackNormal = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+                const fallbackShiny  = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`;
+                const fallback = showShiny ? fallbackShiny : fallbackNormal;
 
                 return (
                     <div
