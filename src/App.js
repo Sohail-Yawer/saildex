@@ -11,6 +11,7 @@ import FilterBar from './components/filter-bar/filter-bar.component';
 import TurnBackToggle from "./components/topbar/turn-back/turn-back.component";
 import ShinyDexToggle from './components/topbar/shinydex/shinydex.component';
 import DarkModeToggle from './components/topbar/darkmode/darkmode.component';
+import ScrollJumpButton from "./components/scroll-jump/scroll-jump.component";
 
 import './App.css';
 
@@ -272,7 +273,7 @@ class App extends Component {
                                         <ShinyDexToggle showShiny={showShiny} onToggle={this.toggleShiny} />
                                         <DarkModeToggle darkMode={darkMode} onToggle={this.toggleDarkMode} />
                                     </div>
-
+                                    <ScrollJumpButton />
                                     {/* Logo at top of homepage (swaps with theme) */}
                                     <div style={{ textAlign: "center", marginBottom: "5px" }}>
                                         <img

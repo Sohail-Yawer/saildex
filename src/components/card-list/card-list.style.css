@@ -105,3 +105,16 @@
 .theme-dark .id-tag{
     color: ghostwhite;
 }
+
+.theme-dark .card-name:hover{
+    background: #1F1F1F;
+
+}
+.theme-dark .card-container:hover .card-name {
+    background: #1F1F1F;
+}
+
+.theme-dark .card-container:hover .sprite-box {
+    background: #2D2D2D;
+}
+

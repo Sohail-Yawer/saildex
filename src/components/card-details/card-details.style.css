@@ -421,4 +421,9 @@
 .theme-dark .sprite-stage {
     background: #363636;          /* darker stage behind sprite */
 }
-
+.theme-dark .evolution-chain-item:hover{
+    background: #2D2D2D;
+}
+.theme-dark .shiny-toggle{
+    color: #ffffff;
+}
