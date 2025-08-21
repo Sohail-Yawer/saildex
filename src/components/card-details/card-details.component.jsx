@@ -44,6 +44,23 @@ const pokemonApiNameForSpecies = (speciesName) => {
     if (speciesName === 'wormadam') return 'wormadam-plant';
     if (speciesName === 'basculin') return 'basculin-red-striped';
     if (speciesName === 'basculegion') return 'basculegion-male';
+    if (speciesName === 'meowstic') return 'meowstic-male';
+    if (speciesName === 'aegislash') return 'aegislash-shield';
+    if (speciesName === 'zygarde') return 'zygarde-50';
+    if (speciesName === 'oricorio') return 'oricorio-baile';
+    if (speciesName === 'lycanroc') return 'lycanroc-midday';
+    if (speciesName === 'wishiwashi') return 'wishiwashi-solo';
+    if (speciesName === 'mimikyu') return 'mimikyu-disguised';
+    if (speciesName === 'eiscue') return 'eiscue-ice';
+    if (speciesName === 'indeedee') return 'indeedee-male';
+    if (speciesName === 'morpeko') return 'morpeko-full-belly';
+    if (speciesName === 'urshifu') return 'urshifu-single-strike';
+    if (speciesName === 'oinkologne') return 'oinkologne-male';
+    if (speciesName === 'maushold') return 'maushold-family-of-four';
+    if (speciesName === 'squawkabilly') return 'squawkabilly-green-plumage';
+    if (speciesName === 'palafin') return 'palafin-zero';
+    if (speciesName === 'tatsugiri') return 'tatsugiri-curly';
+    if (speciesName === 'dudunsparce') return 'dudunsparce-two-segment';
     return speciesName;
 };
 
