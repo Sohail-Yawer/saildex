@@ -109,3 +109,7 @@
     }
     .chip-grid { grid-template-columns: repeat(4, max-content); }
 }
+
+.theme-dark .region-select{
+    background: #2D2D2D;
+}

@@ -398,3 +398,32 @@
     background: #e5e7eb;
     border-color: #cbd5e1;
 }
+
+/* ===== Dark mode look for the details page ===== */
+.theme-dark .panel {
+    background: #363636;          /* slate-900 */
+    border-color: #1f2937;        /* slate-800 */
+}
+
+.theme-dark .panel-title {
+    color: #ffffff;
+}
+
+.theme-dark .info-panel .info-key,
+.theme-dark .info-panel .info-val {
+    color: #ffffff;               /* make Pokédex data text white */
+}
+
+.theme-dark .ability-chip {
+    color: #e5e7eb;
+}
+
+.theme-dark .sprite-stage {
+    background: #363636;          /* darker stage behind sprite */
+}
+.theme-dark .evolution-chain-item:hover{
+    background: #2D2D2D;
+}
+.theme-dark .shiny-toggle{
+    color: #ffffff;
+}

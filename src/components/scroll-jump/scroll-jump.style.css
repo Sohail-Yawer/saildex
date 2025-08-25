@@ -1,0 +1,57 @@
+/* Wrapper fixed near the scrollbar, stack buttons vertically */
+.scroll-jump-wrap {
+    position: fixed;
+    right: 8px;              /* just left of scrollbar */
+    top: 90%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* Shared button styling */
+.scroll-jump {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1px solid rgba(0,0,0,.15);
+    background: #ffffff;
+    color: #111827;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,.15);
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+.scroll-jump:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.2);
+}
+
+.scroll-jump .arrow {
+    font-size: 20px;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Dark mode */
+.theme-dark .scroll-jump {
+    background: #111827;
+    border-color: #1f2937;
+    color: #f9fafb;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+.theme-dark .scroll-jump:hover {
+    background: #0b1220;
+    border-color: #111827;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    .scroll-jump-wrap { right: 6px; }
+    .scroll-jump { width: 40px; height: 40px; }
+}

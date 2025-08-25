@@ -94,3 +94,27 @@
 @media (max-width: 420px) {
     .card-list { grid-template-columns: 1fr; width: 92vw; }
 }
+
+.theme-dark .sprite-box{
+    background: #363636;
+}
+.theme-dark .sprite-box:hover {
+    background: #2D2D2D;
+}
+
+.theme-dark .id-tag{
+    color: ghostwhite;
+}
+
+.theme-dark .card-name:hover{
+    background: #1F1F1F;
+
+}
+.theme-dark .card-container:hover .card-name {
+    background: #1F1F1F;
+}
+
+.theme-dark .card-container:hover .sprite-box {
+    background: #2D2D2D;
+}
+

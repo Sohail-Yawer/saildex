@@ -33,6 +33,14 @@ const TYPE_TEXT_COLOR = {
     steel:  "#000000"
 };
 
+// Options for the new "Filter" dropdown
+const FORM_FILTER_OPTIONS = [
+    { value: "", label: "Any" },
+    { value: "mega", label: "Has Mega" },
+    { value: "alolan", label: "Has Alolan" },
+    { value: "galarian", label: "Has Galarian" },
+    { value: "hisuian", label: "Has Hisuian" },
+];
 
 class FilterBar extends Component {
     componentDidMount() {
@@ -50,7 +58,7 @@ class FilterBar extends Component {
 
         return (
             <div className="filterbar-wrap">
-                {/* LEFT: Label above buttons */}
+                {/* LEFT: Label above buttons (UNCHANGED) */}
                 <div className="filter-column">
                     <h3 className="fb-title">Filter by type:</h3>
                     <div className="chip-grid">
@@ -61,7 +69,7 @@ class FilterBar extends Component {
                                     key={t}
                                     type="button"
                                     className={`type-chip${active ? " active" : ""}`}
-                                    style={{ backgroundColor: TYPE_COLORS[t],  color: TYPE_TEXT_COLOR[t] || "#ffffff" }}
+                                    style={{ backgroundColor: TYPE_COLORS[t], color: TYPE_TEXT_COLOR[t] || "#ffffff" }}
                                     onClick={() => this.handleTypeClick(t)}
                                     aria-pressed={active}
                                 >
@@ -75,7 +83,24 @@ class FilterBar extends Component {
                     </div>
                 </div>
 
-                {/* RIGHT: Label above dropdown */}
+                {/* NEW: Filter dropdown (forms) — placed to the LEFT of Region */}
+                <div className="filter-column">
+                    <h3 className="fb-title">Filter:</h3>
+                    <div className="select-wrap">
+                        <select
+                            className="region-select"
+                            value={filters.form || ""}
+                            onChange={(e) => onFilterChange({ form: e.target.value || null })}
+                        >
+                            {FORM_FILTER_OPTIONS.map(opt => (
+                                <option key={opt.value || "any"} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
+                        <span className="select-caret">▾</span>
+                    </div>
+                </div>
+
+                {/* RIGHT: Region dropdown (UNCHANGED) */}
                 <div className="filter-column">
                     <h3 className="fb-title">Region:</h3>
                     <div className="select-wrap">

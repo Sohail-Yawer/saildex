@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+:root {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --panel: #ffffff;
+    --panel-border: #e5e7eb;
+}
+
+:root.theme-dark {
+    --bg: #1F1F1F;          /* deep slate */
+    --text: #e5e7eb;        /* light text */
+    --panel: #363636;       /* panel bg */
+    --panel-border: #1f2937;
+}
+
+:root.theme-light {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --panel: #ffffff;
+    --panel-border: #e5e7eb;
+}
+/* Apply */
+html, body, #root, .App {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Optional: panels adopt theme automatically */
+.panel {
+    background: var(--panel);
+    border-color: var(--panel-border);
+}
+
+/* Ensure headings inherit color */
+h1, h2, h3, h4, h5, h6 { color: var(--text); }
+
+/* Card hover subtle tweak for dark mode (optional) */
+.theme-dark .card-container:hover {
+    background-color: #1f1f1f !important;
+}

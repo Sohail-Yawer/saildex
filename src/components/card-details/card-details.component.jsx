@@ -19,7 +19,8 @@ const cleanPokemonNameForShiny = (name) => {
     // punctuation quirks
     if (n === 'mr-mime' || n === 'mr-rime') n = n.replace('-', '-'); // mr.mime / mr.rime
     if (n === 'mime-jr') n = n.replace('-', '-');                    // mime_jr
-    if (n === 'nidoran-m' || n === 'nidoran-f') return n;            // keep
+    if (n === 'nidoran-m' || n === 'nidoran-f') return n;
+    if (n === 'minior-red-meteor') n = n.replace('-red','');// keep
     return n;
 };
 
@@ -30,6 +31,36 @@ const pokemonApiNameForSpecies = (speciesName) => {
     if (speciesName === 'deoxys') return 'deoxys-normal';
     if (speciesName === 'keldeo') return 'keldeo-ordinary';
     if (speciesName === 'toxtricity') return 'toxtricity-amped';
+    if (speciesName === 'shaymin') return 'shaymin-land';
+    if (speciesName === 'minior') return 'minior-red-meteor';
+    if (speciesName === 'pumpkaboo') return 'pumpkaboo-average';
+    if (speciesName === 'gourgeist') return 'gourgeist-average';
+    if (speciesName === 'tornadus') return 'tornadus-incarnate';
+    if (speciesName === 'thundurus') return 'thundurus-incarnate';
+    if (speciesName === 'landorus') return 'landorus-incarnate';
+    if (speciesName === 'enamorus') return 'enamorus-incarnate';
+    if (speciesName === 'darmanitan') return 'darmanitan-standard';
+    if(speciesName === 'meloetta') return 'meloetta-aria';
+    if (speciesName === 'wormadam') return 'wormadam-plant';
+    if (speciesName === 'basculin') return 'basculin-red-striped';
+    if (speciesName === 'basculegion') return 'basculegion-male';
+    if (speciesName === 'meowstic') return 'meowstic-male';
+    if (speciesName === 'aegislash') return 'aegislash-shield';
+    if (speciesName === 'zygarde') return 'zygarde-50';
+    if (speciesName === 'oricorio') return 'oricorio-baile';
+    if (speciesName === 'lycanroc') return 'lycanroc-midday';
+    if (speciesName === 'wishiwashi') return 'wishiwashi-solo';
+    if (speciesName === 'mimikyu') return 'mimikyu-disguised';
+    if (speciesName === 'eiscue') return 'eiscue-ice';
+    if (speciesName === 'indeedee') return 'indeedee-male';
+    if (speciesName === 'morpeko') return 'morpeko-full-belly';
+    if (speciesName === 'urshifu') return 'urshifu-single-strike';
+    if (speciesName === 'oinkologne') return 'oinkologne-male';
+    if (speciesName === 'maushold') return 'maushold-family-of-four';
+    if (speciesName === 'squawkabilly') return 'squawkabilly-green-plumage';
+    if (speciesName === 'palafin') return 'palafin-zero';
+    if (speciesName === 'tatsugiri') return 'tatsugiri-curly';
+    if (speciesName === 'dudunsparce') return 'dudunsparce-two-segment';
     return speciesName;
 };
 
@@ -128,29 +159,17 @@ const FORM_TABS = {
         { key: 'mega-y', label: 'Mega Y', normalSuffix: '_f3',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/mewtwo-mega-y.jpg' },
     ],
-    // Kyurem (White/Black)
-    646: [
-        { key: 'white', label: 'White', normalSuffix: '_f2',
-            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/kyurem-white.jpg' },
-        { key: 'black', label: 'Black', normalSuffix: '_f3',
-            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/kyurem-black.jpg' },
-    ],
-    // Giratina (Altered/Origin)
-    487: [
 
-        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
-            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/giratina-origin.jpg' },
+    // Castoform sunny, rainy and snowy
+    351:[
+        {key: 'sunny', label: 'Sunny', normalSuffix:'_f2',
+        shiny:() => 'https://img.pokemondb.net/sprites/home/shiny/2x/castform-sunny.jpg'},
+        {key: 'rainy', label: 'Rainy', normalSuffix:'_f3',
+            shiny:() => 'https://img.pokemondb.net/sprites/home/shiny/2x/castform-rainy.jpg'},
+        {key: 'snowy', label: 'Snowy', normalSuffix:'_f4',
+            shiny:() => 'https://img.pokemondb.net/sprites/home/shiny/2x/castform-snowy.jpg'},
     ],
-    // Dialga (Origin)
-    483: [
-        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
-            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/dialga-origin.jpg' },
-    ],
-    // Palkia (Origin)
-    484: [
-        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
-            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/palkia-origin.jpg' },
-    ],
+
     // Primal Kyogre
     382: [
         { key: 'primal', label: 'Primal', normalSuffix: '_f2',
@@ -170,14 +189,133 @@ const FORM_TABS = {
         { key: 'speed', label: 'Speed', normalSuffix: '_f4',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/deoxys-speed.jpg'}
     ],
+    //Wormadam sandy.trash
+    413:[
+        {key: 'sandy', label: 'Sandy', normalSuffix: '_f2',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/wormadam-sandy.jpg'},
+        {key: 'trash', label: 'Trash', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/wormadam-trash.jpg'},
+    ],
+    //Rotom heat,wash,frost,fan and mow
+    479:[
+        {key: 'heat', label: 'Heat', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/rotom-heat.jpg'},
+        {key: 'wash', label: 'Wash', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/rotom-wash.jpg'},
+        {key: 'frost', label: 'Frost', normalSuffix: '_f4',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/rotom-frost.jpg'},
+        {key: 'fan', label: 'Fan', normalSuffix: '_f5',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/rotom-fan.jpg'},
+        {key: 'mow', label: 'Mow', normalSuffix: '_f6',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/rotom-mow.jpg'},
+    ],
+    // Dialga (Origin)
+    483: [
+        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/dialga-origin.jpg' },
+    ],
+    // Palkia (Origin)
+    484: [
+        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/palkia-origin.jpg' },
+    ],
+    // Giratina (Altered/Origin)
+    487: [
+
+        { key: 'origin', label: 'Origin', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/giratina-origin.jpg' },
+    ],
+    //Shaymin sky
+    492:[
+        { key: 'sky', label: 'Sky', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/shaymin-sky.jpg'},
+    ],
+    //Basculin blue and white
+    550:[
+        { key: 'blue-striped', label: 'Blue striped', normalSuffix: '_f2',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/basculin-blue-striped.jpg'},
+        { key: 'white-striped', label: 'White striped', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/basculin-white-striped.jpg'},
+    ],
+    //Darmanitan zen and Galar zen
+    // 555:[
+    //     {key: 'zen', label: 'Zen', normalSuffix: '-zen',
+    //         shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/darmanitan-zen.jpg'},
+    //     {key: 'zen-galar', label: 'Zen Galar', normalSuffix: '-galarian-zen',
+    //         shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/darmanitan-zen-galarian.jpg'},
+    // ],
+    //Garbodor gmax
+    569: [
+        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    ],
+    //Tornadus therian
+    641: [
+        {key: 'threian', label: 'Therian', normalSuffix: '_f2',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/tornadus-therian.jpg'},
+    ],
+    //Thundurus therian
+    642: [
+        {key: 'threian', label: 'Therian', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/thundurus-therian.jpg'},
+    ],
+    //Landorus therian
+    645: [
+        {key: 'threian', label: 'Therian', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/landorus-therian.jpg'},
+    ],
+    // Kyurem (White/Black)
+    646: [
+        { key: 'white', label: 'White', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/kyurem-white.jpg' },
+        { key: 'black', label: 'Black', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/kyurem-black.jpg' },
+    ],
     //Keldeo Resolute
     647: [
         {key: 'resolute', label: 'Resolute', normalSuffix: '_f2',
             shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/keldeo-resolute.jpg'}
     ],
-    //Garbodor gmax
-    569: [
-        {key: 'gmax', label: 'Gigantamax', normalSuffix: '_f2',},
+    //Meloetta pirouette
+    648: [
+        {key: 'pirouette', label: 'Pirouette', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/meloetta-pirouette.jpg'}
+    ],
+    // Floette eternal
+    670:[
+        {key: 'eternal', label: 'Eternal', normalSuffix: '-eternal',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/floette-eternal.jpg'}
+    ],
+    //Pumpkaboo small, large, super
+    710:[
+        { key: 'small', label: 'Small', normalSuffix: '_f2',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/pumpkaboo-small.jpg' },
+        { key: 'large', label: 'Large', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/pumpkaboo-large.jpg' },
+        { key: 'super', label: 'Super', normalSuffix: '_f4',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/pumpkaboo-super.jpg' },
+    ],
+    //Gourgeist small.large and super
+    711:[
+        { key: 'small', label: 'Small', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/gourgeist-small.jpg' },
+        { key: 'large', label: 'Large', normalSuffix: '_f3',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/gourgeist-large.jpg' },
+        { key: 'super', label: 'Super', normalSuffix: '_f4',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/gourgeist-super.jpg' },
+    ],
+    //Minior red core
+    774:[
+        {key: 'red-core', label: 'Red Core', normalSuffix: '_f2',
+            shiny: ()=> 'https://img.pokemondb.net/sprites/home/shiny/2x/minior-core.jpg'}
+    ],
+    //Necrozma
+    800:[
+        {key: 'dusk-mane', label: 'Dusk Mane', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/necrozma-dusk-mane.jpg'},
+        {key: 'dawn-wings', label: 'Dawn Wings', normalSuffix: '_f3',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/necrozma-dawn-wings.jpg'},
+        {key: 'ultra', label: 'Ultra', normalSuffix: '_f4',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/necrozma-ultra.jpg'},
     ],
     //Melmetal gmax
     809: [
@@ -273,7 +411,18 @@ const FORM_TABS = {
         {key: 'gmax', label: 'Gigantamax', normalSuffix:'_f2',
             // shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/venasaur-gmax.jpg'
         },
-    ]
+    ],
+    //Basculegion female
+    902:[
+        {key: 'female', label: 'Female', normalSuffix:'_f2',
+        shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/basculegion-female.jpg'}
+    ],
+    //Enamorus therian
+    905: [
+        {key: 'threian', label: 'Therian', normalSuffix: '_f2',
+            shiny: () => 'https://img.pokemondb.net/sprites/home/shiny/2x/enamorus-therian.jpg'},
+    ],
+
 };
 
 // ---- Regional forms (Alolan / Galarian / Hisuian) ----
@@ -320,7 +469,7 @@ const REGIONAL_FORMS = {
     263:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Zigzagoon
     264:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Linoone
     554:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Darumaka
-    555:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Darmanitan
+    555:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian-standard' } }, // Darmanitan
     562:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Yamask
     618:{ galarian: { normalSuffix: '_f2', shinySuffix: '-galarian' } }, // Stunfisk
 
