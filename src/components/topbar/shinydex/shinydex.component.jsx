@@ -11,6 +11,7 @@ const ShinyDexToggle = ({ showShiny, onToggle }) => {
                 padding: "6px 12px",
                 borderRadius: 8,
                 border: "1px solid #cbd5e1",
+                zIndex: -1,
                 background: showShiny ? "#111827" : "#ffffff",
                 color: showShiny ? "#ffffff" : "#111827",
                 fontWeight: 700,
